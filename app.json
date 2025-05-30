@@ -1,0 +1,68 @@
+{
+  "expo": {
+    "name": "all-app",
+    "slug": "all-app",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "allapp",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "Aplikacja potrzebuje dostępu do lokalizacji, aby uzyskać informacje o sieci Wi-Fi.",
+        "NSBluetoothAlwaysUsageDescription": "Aplikacja potrzebuje dostępu do Bluetooth, aby łączyć się z urządzeniami.",
+        "NSBluetoothPeripheralUsageDescription": "Aplikacja potrzebuje dostępu do Bluetooth, aby łączyć się z urządzeniami."
+      }
+    },
+    "android": {
+      "permissions": [
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION",
+        "BLUETOOTH",
+        "BLUETOOTH_ADMIN",
+        "BLUETOOTH_SCAN",
+        "BLUETOOTH_CONNECT",
+        "ACCESS_WIFI_STATE",
+        "CHANGE_WIFI_STATE",
+        "BATTERY_STATS",
+        "android.permission.BLUETOOTH",
+        "android.permission.BLUETOOTH_ADMIN",
+        "android.permission.BLUETOOTH_CONNECT"
+      ],
+      "package": "com.kamjak7786.allapp"
+    },
+    "plugins": [
+      [
+        "react-native-permissions",
+        {
+          "permissions": [
+            "LOCATION",
+            "BLUETOOTH"
+          ]
+        }
+      ],
+      [
+        "react-native-ble-plx",
+        {
+          "isBackgroundEnabled": true,
+          "modes": [
+            "peripheral",
+            "central"
+          ],
+          "bluetoothAlwaysPermission": "Aplikacja potrzebuje dostępu do Bluetooth, aby łączyć się z urządzeniami.",
+          "bluetoothPeripheralPermission": "Aplikacja potrzebuje dostępu do Bluetooth, aby łączyć się z urządzeniami."
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "5d40c3c3-84ce-4bcf-8256-8a9e024cad56"
+      }
+    }
+  }
+}
