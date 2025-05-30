@@ -5,6 +5,8 @@ import { StatusBar } from "expo-status-bar";
 import styles from "./styles/style";
 
 import Wifi from "./wifi/wifi";
+// import Bluetooth from "./bluetooth/bluetooth";
+import Battery from "./battery/battery";
 
 const MainLayout = ({ navigation }) => {
     const [loaded] = useFonts({
@@ -23,6 +25,7 @@ const MainLayout = ({ navigation }) => {
         <View style={styles.main_container}>
             <StatusBar style="auto" />
             <Wifi />
+            <Battery />
             <Button
                 title="Click me"
                 onPress={() => navigation.navigate("404_page")}

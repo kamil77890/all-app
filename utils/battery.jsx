@@ -1,14 +1,27 @@
 import DeviceBattery from 'react-native-device-battery';
 
-export function getBatteryData() {
-    DeviceBattery.getBatteryLevel().then(level => {
-        console.log('Poziom baterii:', level);
-    });
 
-    DeviceBattery.isCharging().then(isCharging => {
-        console.log('Czy ładowanie:', isCharging);
-    });
+
+
+export function getBatteryData() {
+    console.log("DeviceBattery module:", DeviceBattery);
+    if (DeviceBattery && typeof DeviceBattery.getBatteryLevel === 'function') {
+        DeviceBattery.getBatteryLevel().then(level => {
+            console.log('Poziom baterii:', level);
+        });
+    } else {
+        console.log('getBatteryLevel method is not available');
+    }
+
+    if (DeviceBattery && typeof DeviceBattery.isCharging === 'function') {
+        DeviceBattery.isCharging().then(isCharging => {
+            console.log('Czy ładowanie:', isCharging);
+        });
+    } else {
+        console.log('isCharging method is not available');
+    }
 }
+
 
 export function getBatteryState() {
     DeviceBattery.getBatteryState().then(state => {
