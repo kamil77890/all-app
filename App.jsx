@@ -4,13 +4,12 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import MainLayout from './components/MainLayout';
 import NotFoundScreen from './components/not_found';
 import AdvancedWifi from './components/UI/advanced_wifi';
-// import BatteryScreen from './components/UI/battery';
+import AdvancedBatteryScreen from './components/UI/advanced_battery';
 import { requestPermissions } from './utils/permissions';
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
-
   React.useEffect(() => {
     requestPermissions();
   }, []);
@@ -21,7 +20,7 @@ export default function App() {
         <Stack.Screen name="Home" component={MainLayout} />
         <Stack.Screen name="404_page" component={NotFoundScreen} />
         <Stack.Screen name="Advanced_wifi" component={AdvancedWifi} />
-        {/* <Stack.Screen name="Advanced_battery" component={BatteryScreen} /> */}
+        <Stack.Screen name="Advanced_battery" component={AdvancedBatteryScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Image, Text } from "react-native";
+import { View, Image, Text, ScrollView } from "react-native";
 import styles from "../style";
 import wifi_image from "../../assets/wifi.png";
 import not_conn from "../../assets/not_conected.png";

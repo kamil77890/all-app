@@ -181,6 +181,7 @@ const base = StyleSheet.create({
   // --- Switch ---
 
   switchContainer: {
+    width: width * 0.9,
     flexDirection: "row",
     alignItems: "center",
     marginBottom: spacing.marginBottomLarge,
@@ -197,6 +198,7 @@ const base = StyleSheet.create({
   advancedSettingsContainer: {
     padding: spacing.paddingLarge,
     borderRadius: spacing.borderRadius,
+    overflow: "scroll",
   },
 
   nav_container: {
@@ -214,6 +216,68 @@ const base = StyleSheet.create({
 
   gap_16: {
     marginTop: spacing.marginTopMedium,
+  },
+
+  // --- Battery styles ---
+  battery_conteiner: {
+    width: width * 0.9,
+    height: height * 0.4,
+    borderRadius: spacing.borderRadiusLarge,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: colors.backgroundDarkerContainer,
+    padding: spacing.paddingLarge,
+  },
+
+  title: {
+    fontSize: 26,
+    fontWeight: "bold",
+    marginBottom: spacing.marginBottomLarge,
+    color: colors.textLight,
+    textAlign: "center",
+    textShadowColor: "#00000088",
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 2,
+  },
+  batteryImage: {
+    width: width * 0.5,
+    height: height * 0.15,
+    resizeMode: "contain",
+    marginBottom: spacing.marginBottomLarge,
+  },
+  batteryLevelText: {
+    fontFamily: "SpaceMono",
+    fontSize: 22,
+    color: colors.textLightSecondary,
+    marginBottom: spacing.marginBottomLarge,
+    textAlign: "center",
+    textShadowColor: "#00000055",
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 1,
+  },
+  margin_16: {
+    marginTop: 16,
+  },
+  advanced_battery_settings: {
+    width: width * 0.9,
+    padding: spacing.paddingLarge,
+    borderRadius: spacing.borderRadius,
+    backgroundColor: colors.backgroundDarkerContainer,
+    marginTop: spacing.marginTopMedium,
+  },
+  batteryStatusText: {
+    fontFamily: "SpaceMono",
+    fontSize: 22,
+    fontWeight: "600",
+    textAlign: "center",
+    marginBottom: spacing.marginTopMedium,
+  },
+  battery_adv_container: {
+    width: width,
+    height: "100%",
+    alignItems: "center",
+    paddingTop: spacing.marginVerticalLarge,
+    backgroundColor: colors.black,
   },
 });
 

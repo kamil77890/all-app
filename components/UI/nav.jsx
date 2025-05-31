@@ -14,7 +14,7 @@ function Nav() {
             <TouchableOpacity onPress={() => navigation.navigate("Home")}>
                 <Text style={styles.bolder}>HOME</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate("Settings")}>
+            <TouchableOpacity onPress={() => navigation.navigate("Advanced_battery")}>
                 <Text style={styles.avg_text}>Battery</Text>
             </TouchableOpacity>
         </View>

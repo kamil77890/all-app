@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Switch } from 'react-native';
+import { View, Text, Switch, ScrollView } from 'react-native';
 
 import { getWifiData, getWifiList } from '../../utils/wifi_data';
 import Nav from './nav';
@@ -80,26 +80,40 @@ function AdvancedWifi({ navigate }) {
                 />
             </View>
             {advancedSetings && (
-                <View style={styles.advancedSettingsContainer}>
+                <ScrollView
+                    style={styles.advancedSettingsContainer}
+                    contentContainerStyle={{ paddingBottom: 20 }}
+                    keyboardShouldPersistTaps="handled"
+                >
                     <Text style={styles.advancedText}>Advanced settings are enabled.</Text>
                     {
                         wifiList.length > 0 ? (
                             <View style={styles.wifiListContainer}>
-                                {wifiList.map((item, index) => (
-                                    <View key={index} style={styles.wifiItem}>
-                                        <Text style={styles.wifiItemText}>SSID: {item.SSID}</Text>
-                                        <Text style={styles.wifiItemText}>Signal Level: {item.level} dBm</Text>
-                                        <Text style={styles.wifiItemText}>Frequency: {item.frequency} MHz</Text>
-                                        <Text style={styles.wifiItemText}>BSSID: {item.BSSID}</Text>
-                                        <Text style={styles.wifiItemText}>Capabilities: {item.capabilities}</Text>
-                                    </View>
-                                ))}
+                                {wifiList.map((item, index) => {
+                                    const isLast = index === wifiList.length - 1;
+                                    return (
+                                        <View
+                                            key={index}
+                                            style={[
+                                                styles.wifiItem,
+                                                isLast && { marginBottom: 70 }, // add marginBottom only on last item
+                                            ]}
+                                        >
+                                            <Text style={styles.wifiItemText}>SSID: {item.SSID}</Text>
+                                            <Text style={styles.wifiItemText}>Signal Level: {item.level} dBm</Text>
+                                            <Text style={styles.wifiItemText}>Frequency: {item.frequency} MHz</Text>
+                                            <Text style={styles.wifiItemText}>BSSID: {item.BSSID}</Text>
+                                            <Text style={styles.wifiItemText}>Capabilities: {item.capabilities}</Text>
+                                        </View>
+                                    );
+                                })}
                             </View>
                         ) : (
-                            <Text style={styles.noWifiText}>No WiFi networks found.</Text>
+                            <Text style={[styles.noWifiText, { marginBottom: 50 }]}>No WiFi networks found.</Text>
                         )
                     }
-                </View>
+
+                </ScrollView>
             )}
             <Nav navigate={navigate} />
         </View>

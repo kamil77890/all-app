@@ -6,7 +6,7 @@ import styles from "./style";
 
 import Wifi from "./UI/wifi";
 // import Bluetooth from "./UI/bluetooth";
-// import Battery from "./UI/battery";
+import Battery from "./UI/battery";
 import Nav from "./UI/nav";
 
 const MainLayout = ({ navigation }) => {
@@ -25,7 +25,7 @@ const MainLayout = ({ navigation }) => {
         <View style={styles.main_container}>
             <StatusBar style="auto" />
             <Wifi />
-            {/* <Battery /> */}
+            <Battery />
 
             <Nav navigation={navigation} />
         </View>
