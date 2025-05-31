@@ -35,24 +35,11 @@
     },
     "plugins": [
       [
-        "react-native-permissions",
-        {
-          "permissions": [
-            "LOCATION",
-            "BLUETOOTH"
-          ]
-        }
-      ],
-      [
         "react-native-ble-plx",
         {
           "isBackgroundEnabled": true,
-          "modes": [
-            "peripheral",
-            "central"
-          ],
-          "bluetoothAlwaysPermission": "Aplikacja potrzebuje dostępu do Bluetooth, aby łączyć się z urządzeniami.",
-          "bluetoothPeripheralPermission": "Aplikacja potrzebuje dostępu do Bluetooth, aby łączyć się z urządzeniami."
+          "modes": ["peripheral", "central"],
+          "bluetoothAlwaysPermission": "Aplikacja potrzebuje dostępu do Bluetooth, aby łączyć się z urządzeniami."
         }
       ]
     ],

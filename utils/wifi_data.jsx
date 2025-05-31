@@ -4,7 +4,6 @@ export async function getWifiData() {
     try {
         if (WifiManager && WifiManager.getCurrentWifiSSID) {
             const ssid = await WifiManager.getCurrentWifiSSID();
-            console.log('Połączono z:', ssid);
             return ssid;
         }
     } catch (error) {
@@ -17,7 +16,6 @@ export async function getWifiList() {
     try {
         if (WifiManager && WifiManager.loadWifiList) {
             const wifiList = await WifiManager.loadWifiList();
-            console.log('Lista Wi-Fi:', wifiList);
             return wifiList;
         } else {
             console.log('loadWifiList method is not available.');
