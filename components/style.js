@@ -112,7 +112,7 @@ const base = StyleSheet.create({
     alignItems: "flex-start",
     padding: spacing.paddingMedium,
     width: width * 0.9,
-    marginVertical: spacing.marginVerticalLarge,
+    marginTop: spacing.marginVerticalLarge,
     gap: 16,
   },
 
@@ -221,18 +221,38 @@ const base = StyleSheet.create({
   // --- Battery styles ---
   battery_conteiner: {
     width: width * 0.9,
-    height: height * 0.4,
     borderRadius: spacing.borderRadiusLarge,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: colors.backgroundDarkerContainer,
     padding: spacing.paddingLarge,
   },
+  battery_card: {
+    width: "100%",
+    backgroundColor: colors.backgroundCard,
+    borderRadius: spacing.borderRadiusLarge,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 6,
+    elevation: 5,
+    alignItems: "center",
+    justifyContent: "center",
+  },
 
   title: {
     fontSize: 26,
     fontWeight: "bold",
-    marginBottom: spacing.marginBottomLarge,
+    color: colors.textLight,
+    textAlign: "center",
+    textShadowColor: "#00000088",
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 2,
+    marginBottom: 16,
+  },
+  title_b: {
+    fontSize: 26,
+    fontWeight: "bold",
     color: colors.textLight,
     textAlign: "center",
     textShadowColor: "#00000088",
@@ -243,7 +263,14 @@ const base = StyleSheet.create({
     width: width * 0.5,
     height: height * 0.15,
     resizeMode: "contain",
-    marginBottom: spacing.marginBottomLarge,
+    marginVertical: spacing.marginBottomLarge,
+  },
+  battery_info_container: {
+    width: width * 0.83,
+    borderRadius: spacing.borderRadiusLarge,
+    alignItems: "center",
+    backgroundColor: colors.backgroundDarkerContainer,
+    padding: spacing.paddingLarge,
   },
   batteryLevelText: {
     fontFamily: "SpaceMono",
@@ -254,6 +281,9 @@ const base = StyleSheet.create({
     textShadowColor: "#00000055",
     textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 1,
+  },
+  margin_8: {
+    marginTop: 8,
   },
   margin_16: {
     marginTop: 16,
@@ -270,6 +300,7 @@ const base = StyleSheet.create({
     fontSize: 22,
     fontWeight: "600",
     textAlign: "center",
+    color: "white",
     marginBottom: spacing.marginTopMedium,
   },
   battery_adv_container: {

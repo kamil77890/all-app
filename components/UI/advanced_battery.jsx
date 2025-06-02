@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { View, Text, Image, StyleSheet, Switch, ScrollView } from 'react-native';
+import { View, Text, Image, Switch, ScrollView, ActivityIndicator, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getBattery } from '../../utils/battery';
 import Nav from './nav';
@@ -9,6 +9,7 @@ import Battery_25 from '../../assets/battery-25.png';
 import Battery_50 from '../../assets/battery-50.png';
 import Battery_75 from '../../assets/battery-75.png';
 import Battery_100 from '../../assets/battery-100.png';
+import Charging from '../../assets/charging.png';
 
 import styles from '../style';
 
@@ -17,6 +18,7 @@ function AdvancedBatteryScreen() {
     const [isCharging, setIsCharging] = useState(false);
     const [advancedSetings, setAdvancedSettings] = useState(false);
     const [batteryHistory, setBatteryHistory] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     const prevChargingRef = useRef(null);
 
@@ -30,11 +32,20 @@ function AdvancedBatteryScreen() {
         return Battery_100;
     };
 
+    const getBatteryTintColor = (level) => {
+        if (level === null) return '#888';
+        if (level <= 0.25) return '#ef4444';    
+        if (level <= 0.5) return '#facc15';     
+        if (level <= 0.75) return '#22c55e';    
+        return '#4ade80';                       
+    };
+
     useEffect(() => {
         const fetchData = async () => {
             const status = await getBattery();
             setBatteryLevel(status.batteryLevel);
             setIsCharging(status.isCharging);
+            setLoading(false);
         };
 
         fetchData();
@@ -91,57 +102,81 @@ function AdvancedBatteryScreen() {
     }, [advancedSetings]);
 
     const renderHistory = () => {
-        const result = [];
+        const pairs = [];
 
         for (let i = 0; i < batteryHistory.length; i++) {
             const event = batteryHistory[i];
             if (event.type === 'CHARGER_CONNECTED' && batteryHistory[i + 1]?.type === 'CHARGER_DISCONNECTED') {
                 const nextEvent = batteryHistory[i + 1];
-                const start = new Date(event.timestamp);
-                const end = new Date(nextEvent.timestamp);
-                const durationMinutes = Math.round((end - start) / 60000);
-
-                result.push(
-                    <View
-                        key={i}
-                        style={{
-                            marginBottom: 15,
-                            padding: 12,
-                            backgroundColor: '#2c2c2e',
-                            borderRadius: 10,
-                            borderWidth: 1,
-                            borderColor: '#3a3a3c',
-                        }}
-                    >
-                        <Text style={{ fontWeight: 'bold', color: '#ffd700', marginBottom: 4 }}>
-                            🔌 Ładowanie rozpoczęto:
-                        </Text>
-                        <Text style={{ color: '#ffffff' }}>Poziom: {event.level}</Text>
-                        <Text style={{ color: '#bbbbbb', marginBottom: 8 }}>
-                            Czas: {start.toLocaleString()}
-                        </Text>
-
-                        <Text style={{ fontWeight: 'bold', color: '#00bfff', marginBottom: 4 }}>
-                            🔋 Odłączono ładowarkę:
-                        </Text>
-                        <Text style={{ color: '#ffffff' }}>Poziom: {nextEvent.level}</Text>
-                        <Text style={{ color: '#bbbbbb' }}>
-                            Czas: {end.toLocaleString()} ({durationMinutes} min)
-                        </Text>
-                    </View>
-
-                );
+                pairs.push({
+                    start: event,
+                    end: nextEvent,
+                });
                 i++;
             }
         }
 
-        return result.length > 0 ? result : <Text>Brak zapisanej historii ładowania</Text>;
+        pairs.sort((a, b) => new Date(b.end.timestamp) - new Date(a.end.timestamp));
+
+        if (pairs.length === 0) {
+            return <Text>Brak zapisanej historii ładowania</Text>;
+        }
+
+        return pairs.map((pair, index) => {
+            const start = new Date(pair.start.timestamp);
+            const end = new Date(pair.end.timestamp);
+            const durationMinutes = Math.round((end - start) / 60000);
+
+            const isLast = index === pairs.length - 1;
+
+            return (
+                <View
+                    key={index}
+                    style={{
+                        marginBottom: isLast ? 70 : 15,
+                        padding: 12,
+                        backgroundColor: '#2c2c2e',
+                        borderRadius: 10,
+                        borderWidth: 1,
+                        borderColor: '#3a3a3c',
+                    }}
+                >
+                    <Text style={{ fontWeight: 'bold', color: '#ffd700', marginBottom: 4 }}>
+                        🔌 Ładowanie rozpoczęto:
+                    </Text>
+                    <Text style={{ color: '#ffffff' }}>Poziom: {pair.start.level}</Text>
+                    <Text style={{ color: '#bbbbbb', marginBottom: 8 }}>
+                        Czas: {start.toLocaleString()}
+                    </Text>
+
+                    <Text style={{ fontWeight: 'bold', color: '#00bfff', marginBottom: 4 }}>
+                        🔋 Odłączono ładowarkę:
+                    </Text>
+                    <Text style={{ color: '#ffffff' }}>Poziom: {pair.end.level}</Text>
+                    <Text style={{ color: '#bbbbbb' }}>
+                        Czas: {end.toLocaleString()} ({durationMinutes} min)
+                    </Text>
+                </View>
+            );
+        });
     };
+
+    if (loading) {
+        return (
+            <View style={[styles.battery_adv_container, localStyles.centeredContainer]}>
+                <ActivityIndicator size="large" color="#82aaff" />
+                <Text style={styles.batteryLevelText}>Loading battery info...</Text>
+            </View>
+        );
+    }
 
     return (
         <View style={styles.battery_adv_container}>
             <Text style={styles.title}>Advanced Battery Information</Text>
-            <Image source={getBatteryImage(batteryLevel)} style={styles.batteryImage} />
+            <Image
+                source={isCharging ? Charging : getBatteryImage(batteryLevel)}
+                style={[styles.batteryImage, { tintColor: getBatteryTintColor(batteryLevel) }]}
+            />
             <Text style={styles.batteryLevelText}>
                 Charging Status: {batteryLevel !== null ? `${Math.round(batteryLevel * 100)}%` : "N/A"}
             </Text>
@@ -157,19 +192,29 @@ function AdvancedBatteryScreen() {
                 />
             </View>
 
-            {advancedSetings && (
-                <ScrollView style={styles.advanced_battery_settings}>
+            {advancedSetings &&
+                <ScrollView style={styles.advanced_battery_settings} contentContainerStyle={{ paddingBottom: 20 }}>
                     <Text style={styles.bolder}>
                         Historia zdarzeń ładowania:
                     </Text>
-                    <View style={styles.margin_16}></View>
+                    <View style={styles.margin_16} />
                     {renderHistory()}
                 </ScrollView>
-            )}
+            }
 
             <Nav />
         </View>
     );
 }
+
+const localStyles = StyleSheet.create({
+    centeredContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#000',
+        padding: 16,
+    },
+});
 
 export default AdvancedBatteryScreen;
